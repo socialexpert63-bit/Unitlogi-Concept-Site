@@ -1,0 +1,248 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Unitlogi Concept Site</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Concept: an architect's blueprint. Faint drafting grid, hairline connectors, units that light up when they match. Teal is the only accent. */
+:root{--navy:#0b1f33;--navy2:#12304d;--teal:#14b8a6;--teal-d:#0d8f81;--bg:#f5f8f9;--surface:#fff;--fg:#10222f;--mute:#566b7a;--line:#d9e3e8;--chip:#e3f4f1;--grid:rgba(13,143,129,.09);--ok:#16794c;--warn:#a86400;--bad:#b42318;--head:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08121b;--surface:#0f2132;--fg:#e6eef3;--mute:#93a9b8;--line:#1c3447;--chip:#11383a;--grid:rgba(111,227,212,.07);--ok:#5fd39a;--warn:#f0b04c;--bad:#ff8a7c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08121b;--surface:#0f2132;--fg:#e6eef3;--mute:#93a9b8;--line:#1c3447;--chip:#11383a;--grid:rgba(111,227,212,.07);--ok:#5fd39a;--warn:#f0b04c;--bad:#ff8a7c;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+a{color:inherit}
+.w{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{background:#e8c25a;color:#2a2008;font-size:13px;text-align:center;padding:8px 16px;font-weight:500}
+header.hero{background:linear-gradient(rgba(111,227,212,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(111,227,212,.08) 1px,transparent 1px),radial-gradient(800px 380px at 90% 0,#14586a,transparent 62%),var(--navy);background-size:44px 44px,44px 44px,auto,auto;color:#e6f2f6}
+nav{display:flex;align-items:center;gap:20px;padding-block:18px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:700 22px var(--head);letter-spacing:.03em;text-decoration:none;color:#fff}
+nav .sp{flex:1}
+nav a.l{color:#b8d0da;text-decoration:none;font-size:14px}nav a.l:hover{color:#fff}
+.btn{display:inline-block;padding:11px 20px;border-radius:10px;font:600 15px var(--body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.p{background:var(--teal);color:#05241f}.btn.p:hover{background:#2dd4c1}
+.btn.g{border-color:#3a6277;color:#e6f2f6;background:transparent}
+.tg{background:transparent;border:1px solid #3a6277;color:#b8d0da;border-radius:99px;padding:6px 12px;cursor:pointer;font-size:13px}
+.heroGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center;padding-block:52px 80px}
+@media(max-width:900px){.heroGrid{grid-template-columns:1fr}}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6fe3d4;font-weight:600}
+h1{font:700 clamp(34px,5vw,56px)/1.04 var(--head);margin:12px 0 18px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--teal)}
+.lead{color:#b8d0da;font-size:18px;max-width:50ch;margin:0 0 26px}
+.demo{background:#0f2a42;border:1px solid #2a5a75;border-radius:16px;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.demo h3{margin:0;font:600 17px var(--head)}
+.demo .meta{font-size:13px;color:#9fb7c4;margin:2px 0 14px}
+.demo label{font-size:13px;color:#b8d0da;display:flex;justify-content:space-between}
+.demo input[type=range]{width:100%;accent-color:#14b8a6;margin:8px 0 14px}
+.unit{border:1px solid #2a5a75;border-radius:12px;padding:14px;background:#0b1f33;transition:border-color .3s,box-shadow .3s}
+.unit.hi{border-color:#2dd4c1;box-shadow:0 0 0 3px rgba(45,212,193,.15)}
+.unit .r{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.unit .sc{font:700 28px var(--head);color:#6fe3d4;font-variant-numeric:tabular-nums}
+.meter{height:7px;border-radius:99px;background:#1b3d54;margin:8px 0 12px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#0d8f81,#2dd4c1);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.ck{font-size:13px;display:flex;gap:10px;margin-top:5px;color:#cfe3ea}
+.ck b{font-weight:600;min-width:60px}.ck .m{color:#6fe3d4}.ck .d{color:#f0b04c}.ck .v{color:#9fb7c4}
+.hint{font-size:12px;color:#8fb0c0;margin:10px 0 0}
+
+.dh{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2dd4c1,#0d8f81);color:#05241f;font:700 15px var(--head);display:grid;place-items:center;flex:none}
+.demo .meta{margin:2px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid #2a5a75;background:transparent;color:#b8d0da;border-radius:99px;padding:6px 13px;font:500 13px var(--body);cursor:pointer;transition:all .2s}
+.chip:hover{border-color:#2dd4c1;color:#fff}.chip.on{background:#14b8a6;border-color:#14b8a6;color:#05241f}
+.bud{margin-bottom:16px}
+.rng{position:relative;padding-top:26px}
+.mk{position:absolute;top:0;left:50%;transform:translateX(-50%);font-style:normal;transition:left .5s cubic-bezier(.2,.8,.2,1)}
+.mk span{display:block;font:600 11px var(--body);color:#2a2008;background:#e8c25a;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.mk::after{content:"";position:absolute;left:50%;bottom:-4px;margin-left:-4px;border:4px solid transparent;border-top-color:#e8c25a;border-bottom:0}
+.demo input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:8px;margin:0;border-radius:99px;cursor:pointer;background:linear-gradient(90deg,#2dd4c1 var(--f,50%),#1b3d54 var(--f,50%))}
+.demo input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid #14b8a6;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.demo input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid #14b8a6}
+.rl2{display:flex;justify-content:space-between;font-size:11px;color:#7fa0b2;margin-top:6px}
+.unit .top{display:flex;gap:12px;align-items:center}
+.unit .top b{font:600 15px var(--head);display:block}
+.ph{width:52px;height:52px;border-radius:10px;flex:none;transition:background .4s}
+.ring{width:70px;height:70px;flex:none;margin-inline-start:auto}
+.rb{fill:none;stroke:#1b3d54;stroke-width:7}
+.rf{fill:none;stroke:#2dd4c1;stroke-width:7;stroke-linecap:round;stroke-dasharray:201.06;stroke-dashoffset:201.06;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1),stroke .3s}
+.ring text{font:700 19px var(--head);fill:#e6f6f4}
+.vd{display:inline-block;margin:12px 0 6px;font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px}
+.vd.s{background:rgba(45,212,193,.16);color:#6fe3d4}.vd.p{background:rgba(240,176,76,.16);color:#f0b04c}.vd.w{background:rgba(255,138,124,.16);color:#ff8a7c}
+.nx{font-size:13px;color:#cfe3ea;border-top:1px dashed #2a5a75;margin-top:12px;padding-top:10px}
+section{padding-block:76px}
+.k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-d);font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .k{color:var(--teal)}}
+:root[data-theme="dark"] .k{color:var(--teal)}
+h2{font:600 clamp(26px,3.4vw,38px)/1.15 var(--head);margin:8px 0 14px;text-wrap:balance;max-width:24ch}
+.sub{color:var(--mute);max-width:60ch;margin:0 0 32px}
+.bp{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px}
+.map{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.map svg{width:100%;height:auto;display:block}
+.map text{font:600 13px var(--head);fill:var(--fg)}.map .s{font:400 11px var(--body);fill:var(--mute)}
+.ln{stroke:var(--teal);stroke-width:2;stroke-dasharray:6 6;animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:9px 16px;border-radius:99px;cursor:pointer;font:500 14px var(--body)}
+.tab[aria-selected=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tp{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;align-items:center}
+@media(max-width:800px){.tp{grid-template-columns:1fr}}
+.tp[hidden]{display:none}
+.tp h3{font:600 22px var(--head);margin:0 0 8px}.tp p{color:var(--mute);margin:0}
+.mini{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)}
+.mini .it{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}.mini .it:first-child{border-top:0}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap;height:fit-content}
+.pill.m{background:rgba(30,160,100,.15);color:var(--ok)}.pill.d{background:rgba(220,60,40,.13);color:var(--bad)}.pill.v{background:rgba(224,150,30,.16);color:var(--warn)}.pill.t{background:var(--chip);color:var(--teal-d)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.t{color:var(--teal)}}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.f h3{font:600 18px var(--head);margin:10px 0 6px}.f p{margin:0;color:var(--mute);font-size:15px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:start;border-top:1px solid var(--line);font-size:14px}th{font-weight:600;background:var(--bg)}
+.langs{display:flex;flex-wrap:wrap;gap:10px}.langs span{padding:9px 16px;border:1px solid var(--line);border-radius:99px;background:var(--surface);font-weight:500}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:36px;align-items:center}
+.ai{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#e6f6f4;border-radius:14px;padding:22px;border:1px solid #1d4f5a}
+.ai .tag{font-size:11px;background:#14473f;color:#6fe3d4;padding:2px 9px;border-radius:99px;font-weight:600}.ai p{margin:10px 0}
+.cta{background:var(--navy);color:#e6f2f6;border-radius:20px;padding:52px 28px;text-align:center}
+.cta h2{margin-inline:auto;color:#fff}.cta p{color:#b8d0da;max-width:52ch;margin:0 auto 24px}
+footer{padding-block:32px;color:var(--mute);font-size:13px}footer .w{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.au{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:20px}
+@media(max-width:800px){.au{grid-template-columns:1fr}}
+.rl button{display:block;width:100%;text-align:start;padding:14px;margin-bottom:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:12px;cursor:pointer;font:inherit;transition:border-color .2s,box-shadow .2s}
+.rl button[aria-pressed=true]{border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,184,166,.15)}
+.rl b{display:block;font:600 15px var(--head)}.rl span{font-size:13px;color:var(--mute)}
+.rp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.st{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);align-items:flex-start}.st:first-child{border-top:0}
+.dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:12px;font-weight:700;transition:all .3s}
+.st.run .dot{border-color:var(--teal);animation:pulse 1s infinite}
+.st.done .dot{background:var(--teal);border-color:var(--teal);color:#05241f}
+.st.wait .dot{border-color:var(--warn);background:rgba(224,150,30,.22)}
+.st.skip .dot{opacity:.4}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(20,184,166,.2)}}
+.st b{font-weight:600}.st small{display:block;color:var(--mute);font-size:13px}
+.gt{border:1px solid var(--warn);border-radius:12px;padding:14px;margin:12px 0;background:rgba(224,150,30,.08)}
+.gt[hidden]{display:none}
+.gt textarea{width:100%;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;margin:8px 0}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn.alt{border-color:var(--line);color:var(--fg);background:transparent}
+#log{margin-top:14px;padding:12px;border-radius:10px;background:var(--bg);font:12px/1.7 ui-monospace,Menlo,monospace;color:var(--mute);min-height:44px;white-space:pre-wrap}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4c1"/><stop offset="1" stop-color="#0d8f81"/></linearGradient>
+<symbol id="mark" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#lg)"/><path d="M14 11v15a10 10 0 0 0 20 0V11" fill="none" stroke="#06242a" stroke-width="5" stroke-linecap="round"/><circle cx="24" cy="17" r="3.6" fill="#fff"/><path d="M24 20.6V27" stroke="#fff" stroke-width="3" stroke-linecap="round"/></symbol></defs></svg>
+
+<div class="band">Prepared for Nicolas Elorduy · Unofficial concept by Cyber Advance Solutions. A design proposal, not the Unitlogi website. Sample content only.</div>
+<header class="hero"><div class="w">
+<nav><a class="logo" href="#top" id="top"><svg width="36" height="36"><use href="#mark"/></svg>UNITLOGI</a><span class="sp"></span><a class="l" href="#tour">Video</a><a class="l" href="#connected">How it connects</a><a class="l" href="#inside">Inside</a><a class="l" href="#new">New ideas</a><a class="l" href="#auto">Automations</a><a class="l" href="#teams">Teams</a><button class="tg" id="th" type="button">Light / dark</button><a class="btn p" href="#cta">Book a demo</a></nav>
+<div class="heroGrid">
+<div><div class="eyebrow">Connected broker workspace · Prepared for Nicolas Elorduy</div><h1>Your clients remember what they said. <em>Now your workspace does too.</em></h1><p class="lead">Keep every client brief, property, follow-up and deal connected, so the next conversation starts with the whole picture in front of you.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn p" href="#inside">Explore the workspace</a><a class="btn g" href="https://claude.ai/artifact/DrcYqWnigARXokC1UFSfDr" target="_blank" rel="noopener">Open the prototype</a></div></div>
+<div class="demo" aria-label="Interactive match demo with sample data">
+<div class="dh"><div class="av">LH</div><div style="min-width:0"><h3>Layla Haddad</h3><div class="meta">2-bed apartment · Dubai Marina or JBR · <span class="pill t" style="font-family:var(--body)">Sample client</span></div></div></div>
+<div class="chips" role="group" aria-label="Choose a property"><button type="button" class="chip on" data-p="0">JBR Sea-View</button><button type="button" class="chip" data-p="1">Marina Gate</button><button type="button" class="chip" data-p="2">Business Bay</button></div>
+<div class="bud"><label for="bud"><span>Budget ceiling</span><b id="bv"></b></label><div class="rng"><i class="mk" id="mk"><span id="mkl"></span></i><input id="bud" type="range" min="1000000" max="3000000" step="50000" value="2600000"></div><div class="rl2"><span>AED 1.0M</span><span>AED 3.0M</span></div></div>
+<div class="unit" id="un"><div class="top"><div class="ph" id="ph"></div><div style="min-width:0"><b id="pt"></b><div class="meta" id="pl"></div></div><svg class="ring" viewBox="0 0 80 80" role="img" aria-label="Match score"><circle cx="40" cy="40" r="32" class="rb"/><circle id="rg" cx="40" cy="40" r="32" class="rf" transform="rotate(-90 40 40)"/><text id="sc" x="40" y="46" text-anchor="middle">0%</text></svg></div>
+<span class="vd" id="vd"></span><div id="cl"></div><div class="nx" id="nx"></div></div>
+<p class="hint">Drag the slider or switch property. The score and the reasons change together.</p></div>
+</div></div></header>
+
+<main>
+<section id="tour"><div class="w"><div class="k">Product tour</div><h2>Watch the platform in 47 seconds</h2><p class="sub">A walkthrough of the interactive prototype: My Day, client profiles, matching, follow-ups, pipeline, AI suggestions, team views and Arabic right-to-left. Sample data only.</p>
+<video controls preload="metadata" poster="poster.jpg" src="platform-tour.mp4" aria-label="Unitlogi concept platform tour, 47 seconds" style="width:100%;max-width:1000px;display:block;border-radius:16px;border:1px solid var(--line);background:#0b1f33"></video>
+<p style="margin-top:18px"><a class="btn p" href="https://claude.ai/artifact/DrcYqWnigARXokC1UFSfDr" target="_blank" rel="noopener">Open the interactive prototype</a></p></div></section>
+
+<section id="connected" class="bp" style="border-bottom:1px solid var(--line)"><div class="w"><div class="k">How it connects</div><h2>Four things brokers track. One thread between them.</h2><p class="sub">A change in one place shows up where you need it. A raised budget changes the matches. A viewing creates a follow-up. A follow-up moves the deal.</p>
+<div class="map"><svg viewBox="0 0 900 260" role="img" aria-label="Client, property, follow-up and deal connected in a chain">
+<line class="ln" x1="200" y1="130" x2="340" y2="130"/><line class="ln" x1="560" y1="130" x2="700" y2="130" /><line class="ln" x1="450" y1="70" x2="450" y2="20"/>
+<g><rect x="30" y="80" width="170" height="100" rx="14" fill="var(--chip)" stroke="var(--teal)"/><text x="115" y="124" text-anchor="middle">Client</text><text class="s" x="115" y="146" text-anchor="middle">Brief and timeline</text></g>
+<g><rect x="340" y="80" width="220" height="100" rx="14" fill="var(--chip)" stroke="var(--teal)"/><text x="450" y="124" text-anchor="middle">Property match</text><text class="s" x="450" y="146" text-anchor="middle">Score with reasons</text></g>
+<g><rect x="700" y="80" width="170" height="100" rx="14" fill="var(--chip)" stroke="var(--teal)"/><text x="785" y="124" text-anchor="middle">Deal stage</text><text class="s" x="785" y="146" text-anchor="middle">Moved by the broker</text></g>
+<g><rect x="360" y="190" width="180" height="56" rx="12" fill="var(--surface)" stroke="var(--line)"/><text x="450" y="223" text-anchor="middle">Follow-up</text></g>
+<line class="ln" x1="450" y1="180" x2="450" y2="190"/></svg></div></div></section>
+
+<section id="inside"><div class="w"><div class="k">Inside the workspace</div><h2>See the four screens that matter most</h2><p class="sub">Pick a screen. Everything shown is sample data.</p>
+<div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true" data-t="0">My Day</button><button class="tab" role="tab" aria-selected="false" data-t="1">Client profile</button><button class="tab" role="tab" aria-selected="false" data-t="2">Matching</button><button class="tab" role="tab" aria-selected="false" data-t="3">Pipeline</button></div>
+<div class="tp" data-p="0"><div><h3>Start with what needs you</h3><p>Follow-ups due, new matches, clients going quiet and deals that moved, in one calm view.</p></div><div class="mini"><div class="it"><span>Call Layla about viewing</span><span class="pill v">Today</span></div><div class="it"><span>Email Omar: Business Bay options</span><span class="pill t">Today</span></div><div class="it"><span>Marcus Weber: no contact for 4 days</span><span class="pill d">Going quiet</span></div></div></div>
+<div class="tp" data-p="1" hidden><div><h3>The whole brief, with its history</h3><p>Requirements, preferences and every conversation on one timeline, so a change in the brief is never buried in a note.</p></div><div class="mini"><div class="it"><span>Budget raised to AED 2.6M after pre-approval</span><span class="pill v">Brief changed</span></div><div class="it"><span>Call: prefers a high floor</span><span class="pill t">17 Nov</span></div><div class="it"><span>First meeting: 2-bed near the Marina</span><span class="pill t">5 Nov</span></div></div></div>
+<div class="tp" data-p="2" hidden><div><h3>Matches that explain themselves</h3><p>Every suggestion lists what is met, what differs and what to verify. The broker decides what to share.</p></div><div class="mini"><div class="it"><span>Location preferred</span><span class="pill m">Met</span></div><div class="it"><span>Price 6% above budget</span><span class="pill d">Differs</span></div><div class="it"><span>Handover date unconfirmed</span><span class="pill v">Verify</span></div></div></div>
+<div class="tp" data-p="3" hidden><div><h3>Stages you control</h3><p>Move deals from first interest to close. Every change is made or confirmed by the broker.</p></div><div class="mini"><div class="it"><span>Property shared</span><span class="pill t">1</span></div><div class="it"><span>Viewing scheduled</span><span class="pill t">1</span></div><div class="it"><span>Negotiation</span><span class="pill t">1</span></div></div></div>
+</div></section>
+
+<section id="new" style="padding-top:0"><div class="w"><div class="k">New ideas in this concept</div><h2>Small additions that remove daily friction</h2><p class="sub">These are proposals from the design team. Three are playable in the prototype. They are not features of the live product.</p>
+<div class="cols">
+<div class="f"><span class="pill t">In the prototype</span><h3>Going-quiet alerts</h3><p>Clients with no recorded contact for several days surface on My Day, with one click to record the next touch.</p></div>
+<div class="f"><span class="pill t">In the prototype</span><h3>Shortlists and viewing planner</h3><p>Save matches for a client, then turn the shortlist into an ordered viewing plan grouped by area.</p></div>
+<div class="f"><span class="pill t">In the prototype</span><h3>Command palette</h3><p>Press Ctrl K to jump to any client, property or screen without leaving the keyboard.</p></div>
+<div class="f"><span class="pill v">Concept only</span><h3>Brief diff</h3><p>See exactly what changed between two versions of a client brief before the next call.</p></div>
+<div class="f"><span class="pill v">Concept only</span><h3>Broker-approved client link</h3><p>Share a shortlist page with a client after the broker reviews and approves what appears on it.</p></div>
+<div class="f"><span class="pill v">Concept only</span><h3>Verification queue</h3><p>One list of every property detail marked “verify”, so nothing unconfirmed reaches a client.</p></div>
+</div></div></section>
+
+<section id="auto" style="padding-top:0"><div class="w"><div class="k">AI automation</div><h2>Let routine work run. Keep every decision.</h2><p class="sub">Pick an automation and run it. Anything a client would see, and any deal-stage change, stops at a broker approval step. This demo is simulated and calls no real AI.</p>
+<div class="au"><div class="rl" id="rl"></div><div class="rp"><div id="steps"></div><div class="gt" id="gate" hidden></div><div class="acts"><button class="btn p" id="run" type="button">Run simulation</button><button class="btn alt" id="rs" type="button">Reset</button></div><div id="log" aria-live="polite">Choose an automation, then run it.</div></div></div></div></section>
+
+<section id="ai" style="background:var(--surface);border-block:1px solid var(--line)"><div class="w two"><div class="ai"><span class="tag">AI suggestion · review before use</span><p><b>Draft follow-up for Layla</b></p><p>“Hi Layla, thank you for your time earlier. I have two options near the Marina that fit your brief. Would a viewing this week suit you?”</p><p style="font-size:13px;color:#9fd8d0">Based on the recorded profile and timeline. You edit and approve before anything is sent.</p></div>
+<div><div class="k">AI assistance</div><h2>Help with the context you already recorded</h2><p class="sub" style="margin-bottom:0">Summarize a discussion, see what changed in a brief, draft a message or structure a property description. Every output is a suggestion. The broker decides.</p></div></div></section>
+
+<section id="teams"><div class="w"><div class="k">Teams of 2 to 5</div><h2>Shared where it helps, private where it matters</h2><p class="sub">An illustrative access model. The live product's real roles and permissions apply.</p>
+<div class="scroll"><table><tr><th></th><th>Broker</th><th>Manager</th></tr><tr><td>Own client profiles and notes</td><td>Full access</td><td>No access</td></tr><tr><td>Other brokers' client profiles</td><td>No access</td><td>No access</td></tr><tr><td>Shared property inventory</td><td>View, edit own</td><td>View</td></tr><tr><td>Deal stages and activity counts</td><td>Own deals</td><td>Team overview</td></tr><tr><td>Duplicate contact review</td><td>Own records</td><td>Team-wide</td></tr></table></div>
+<div style="margin-top:36px"><div class="k">Languages</div><h2 style="margin-bottom:14px">Seven languages, with right-to-left Arabic</h2><div class="langs"><span>English</span><span>العربية</span><span>ไทย</span><span>日本語</span><span>Türkçe</span><span>Español</span><span>Français</span></div></div></div></section>
+
+<section id="cta" style="padding-top:0"><div class="w"><div class="cta"><h2>Prepared for Nicolas Elorduy</h2><p>This page and the workspace prototype are a design concept. Open the prototype, or ask the Cyber Advance Solutions team for a walkthrough.</p><a class="btn p" href="https://claude.ai/artifact/DrcYqWnigARXokC1UFSfDr" target="_blank" rel="noopener">Open the interactive prototype</a></div></div></section>
+</main>
+<footer><div class="w"><span style="display:flex;align-items:center;gap:8px"><svg width="22" height="22"><use href="#mark"/></svg>Unitlogi concept by Cyber Advance Solutions</span><span>Prepared for Nicolas Elorduy. Unofficial concept. Not affiliated with or endorsed by Unitlogi or Intech Heritage. All content is sample data.</span></div></footer>
+<script>
+(function(){
+var sl=document.getElementById('bud');
+var PR=[{t:'JBR Sea-View Apartment',l:'JBR · 2 bed · 1,350 sqft',p:2750000,loc:1,beds:1,v:'Service charge not confirmed',h:195},{t:'Marina Gate 2-Bed',l:'Dubai Marina · 2 bed · 1,280 sqft',p:2350000,loc:1,beds:1,v:'Title deed copy missing',h:215},{t:'Business Bay Canal-View',l:'Business Bay · 1 bed · 780 sqft',p:1250000,loc:0,beds:0,v:'Handover date unverified',h:160}];
+var cp=0,shown=0,MIN=1000000,MAX=3000000,CIR=2*Math.PI*32;
+function money(n){return 'AED '+(n/1e6).toFixed(2)+'M'}
+function upd(){var c=+sl.value,P=PR[cp],pts=0,rows=[];
+sl.style.setProperty('--f',((c-MIN)/(MAX-MIN)*100)+'%');
+document.getElementById('bv').textContent=money(c);
+document.getElementById('mk').style.left='calc(11px + (100% - 22px) * '+((P.p-MIN)/(MAX-MIN))+')';
+document.getElementById('mkl').textContent='Price '+money(P.p);
+if(P.p<=c){pts+=35;rows.push(['m','Met','Price is inside the budget'])}
+else if(P.p<=c*1.1){pts+=15;rows.push(['d','Differs','Price is '+Math.round((P.p/c-1)*100)+'% above the budget'])}
+else{rows.push(['d','Differs','Price is '+money(P.p-c)+' over the budget'])}
+if(P.loc){pts+=25;rows.push(['m','Met','Location is preferred'])}else rows.push(['d','Differs','Not one of the preferred areas']);
+pts+=20;rows.push(['m','Met','Property type matches']);
+if(P.beds){pts+=20;rows.push(['m','Met','2 bedrooms as required'])}else rows.push(['d','Differs','1 bedroom, 2 required']);
+rows.push(['v','Verify',P.v]);
+document.getElementById('cl').innerHTML=rows.map(function(r){return '<div class="ck"><b class="'+r[0]+'">'+r[1]+'</b>'+r[2]+'</div>'}).join('');
+document.getElementById('pt').textContent=P.t;document.getElementById('pl').textContent=P.l+' · '+money(P.p);
+document.getElementById('ph').style.background='linear-gradient(135deg,hsl('+P.h+' 60% 30%),hsl('+(P.h+30)+' 55% 45%))';
+var v=pts>=85?['s','Strong match','Suggested next step: verify the open item, then share with Layla. You decide.']:pts>=60?['p','Partial match','Suggested next step: talk through the differences with Layla before sharing. You decide.']:['w','Weak match','Suggested next step: probably skip, or ask whether the brief has changed. You decide.'];
+var vd=document.getElementById('vd');vd.className='vd '+v[0];vd.textContent=v[1];document.getElementById('nx').textContent=v[2];
+var rg=document.getElementById('rg');rg.style.strokeDashoffset=CIR*(1-pts/100);rg.style.stroke=pts>=85?'#2dd4c1':pts>=60?'#f0b04c':'#ff8a7c';
+var el=document.getElementById('sc'),from=shown,t0=performance.now();shown=pts;
+(function f(n){var k=Math.min(1,(n-t0)/450);el.textContent=Math.round(from+(pts-from)*k)+'%';if(k<1)requestAnimationFrame(f)})(t0);
+document.getElementById('un').className='unit'+(pts>=85?' hi':'')}
+sl.addEventListener('input',upd);
+document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){cp=+b.dataset.p;document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===b)});upd()})});
+upd();
+var R=[
+{n:'Budget changed',d:'Re-match properties and prepare a client update',st:[['Trigger','Broker records a new budget for Layla',0],['Re-run matching','Compare 9 sample properties against the updated brief',0],['Draft client update','Prepare a message from the recorded timeline',0],['Broker approval','Review and edit the draft. Nothing is sent without you',1]],g:'Hi Layla, with your updated budget I have two new options near the Marina. Would a viewing this week suit you?'},
+{n:'Viewing recorded',d:'Create the follow-up and suggest a deal stage',st:[['Trigger','Broker logs a property viewing',0],['Create follow-up','Schedule a call for the next day',0],['Suggest deal stage','Propose moving the deal to Negotiation',0],['Broker confirmation','Confirm or decline the stage change',1]],g:'Suggested: move “Palm Signature Villa” from Viewing Scheduled to Negotiation. The stage changes only if you confirm.'},
+{n:'Client going quiet',d:'Notice silence and prepare a gentle check-in',st:[['Trigger','No recorded contact for 4 days',0],['Gather context','Read the last interaction and open questions',0],['Draft check-in','Prepare a short, polite message',0],['Broker approval','Review and edit before it goes anywhere',1]],g:'Hi Marcus, just checking in after our call. Shall I line up a few Downtown viewings for next week?'},
+{n:'Property document imported',d:'Extract fields and flag what is missing',st:[['Trigger','Broker uploads a PDF, Excel or CSV',0],['Extract fields','Read title, location, price, bedrooms and area',0],['Flag gaps','Mark missing or unverified details',0],['Broker review','Check and correct every field before saving',1]],g:'2 of 3 rows are complete. Row 2 is missing a price and row 3 is missing an area. Edit them, then save.'}];
+var cur=0,idx=0,busy=false,rl=document.getElementById('rl'),stp=document.getElementById('steps'),gate=document.getElementById('gate'),lg=document.getElementById('log'),runb=document.getElementById('run');
+function say(m){lg.textContent=(lg.textContent.indexOf('Choose')===0?'':lg.textContent+'\n')+m}
+function draw(){rl.innerHTML=R.map(function(r,i){return '<button type="button" aria-pressed="'+(i===cur)+'" data-i="'+i+'"><b>'+r.n+'</b><span>'+r.d+'</span></button>'}).join('');
+stp.innerHTML=R[cur].st.map(function(s,i){return '<div class="st" id="s'+i+'"><span class="dot">'+(i+1)+'</span><div><b>'+s[0]+'</b> <span class="pill '+(s[2]?'v':'t')+'">'+(s[2]?'Needs your approval':'Automatic')+'</span><small>'+s[1]+'</small></div></div>'}).join('');
+rl.querySelectorAll('button').forEach(function(b){b.onclick=function(){if(busy)return;cur=+b.dataset.i;reset()}})}
+function reset(){busy=false;idx=0;gate.hidden=true;lg.textContent='Choose an automation, then run it.';runb.disabled=false;draw()}
+function mark(i,c){var e=document.getElementById('s'+i);e.className='st '+c;e.querySelector('.dot').textContent=c==='done'?'✓':(i+1)}
+function next(){var S=R[cur].st;if(idx>=S.length){say('Finished. Every decision was yours.');busy=false;runb.disabled=false;return}
+var s=S[idx];mark(idx,'run');setTimeout(function(){if(s[2]){mark(idx,'wait');say('Waiting for the broker: '+s[0]);gate.hidden=false;gate.innerHTML='<b>'+s[0]+'</b><textarea id="gt" rows="3" aria-label="Draft">'+R[cur].g+'</textarea><div class="acts"><button class="btn p" id="ap" type="button">Approve</button><button class="btn alt" id="sk" type="button">Skip</button></div>';
+document.getElementById('ap').onclick=function(){gate.hidden=true;mark(idx,'done');say('Approved by the broker.');idx++;next()};
+document.getElementById('sk').onclick=function(){gate.hidden=true;mark(idx,'skip');say('Skipped by the broker. Nothing was sent or changed.');busy=false;runb.disabled=false}}
+else{mark(idx,'done');say('Done: '+s[0]);idx++;next()}},850)}
+runb.onclick=function(){if(busy)return;reset();busy=true;runb.disabled=true;lg.textContent='';say('Simulation started (sample data, no real AI called).');next()};
+document.getElementById('rs').onclick=reset;draw();
+var tabs=document.querySelectorAll('.tab'),ps=document.querySelectorAll('.tp');
+tabs.forEach(function(b){b.addEventListener('click',function(){tabs.forEach(function(x){x.setAttribute('aria-selected',x===b)});ps.forEach(function(p){p.hidden=p.dataset.p!==b.dataset.t})})});
+document.getElementById('th').addEventListener('click',function(){var r=document.documentElement,cur=r.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');r.dataset.theme=cur==='dark'?'light':'dark'});
+})();
+</script>
+
+</body></html>
