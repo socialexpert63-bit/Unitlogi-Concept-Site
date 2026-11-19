@@ -171,7 +171,7 @@ function shell(){
  $('#shell').innerHTML=`<aside class="side"><div class="brand"><div class="bl"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4c1"/><stop offset="1" stop-color="#0d8f81"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#lg)"/><path d="M14 11v15a10 10 0 0 0 20 0V11" fill="none" stroke="#06242a" stroke-width="5" stroke-linecap="round"/><circle cx="24" cy="17" r="3.6" fill="#fff"/><path d="M24 20.6V27" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg><span>UNITLOGI</span></div><small>${t('brand')}</small></div>
  <div class="grp">${t('g1')}</div>${nav('myday','◐','myday')}${nav('clients','☺','clients')}${nav('properties','⌂','properties')}${nav('matching','✦','matching')}${nav('followups','◷','followups')}${nav('pipeline','▤','pipeline')}
  <div class="grp">${t('g2')}</div>${nav('ai','✧','ai')}${nav('team','☷','team')}${nav('insights','▥','insights')}${nav('settings','⚙','settings')}
- <div style="margin-top:auto"></div><a class="nav" href="index.html" target="_blank" rel="noopener"><i>↗</i>Back to website</a><button class="nav" data-a="pal"><i>⌕</i>Search <span style="margin-inline-start:auto;font-size:11px;opacity:.7">Ctrl K</span></button><button class="nav" data-a="theme"><i>◑</i>Light / dark</button><div style="padding:12px 10px;font-size:11px;color:#6f8ea3">Prepared for Nicolas Elorduy. Prototype concept. Sample data only. Not part of the live Unitlogi product.</div></aside>
+ <div style="margin-top:auto"></div><a class="nav" href="https://claude.ai/artifact/CjJ4MAhBZqdbrn2UYs8zir" target="_blank" rel="noopener"><i>↗</i>Back to website</a><button class="nav" data-a="pal"><i>⌕</i>Search <span style="margin-inline-start:auto;font-size:11px;opacity:.7">Ctrl K</span></button><button class="nav" data-a="theme"><i>◑</i>Light / dark</button><div style="padding:12px 10px;font-size:11px;color:#6f8ea3">Prepared for Nicolas Elorduy. Prototype concept. Sample data only. Not part of the live Unitlogi product.</div></aside>
  <main class="main" id="view"></main>`;
  document.documentElement.dir=L[S.lang].dir;document.documentElement.lang=S.lang;
 }
@@ -303,4 +303,140 @@ document.addEventListener('change',e=>{const el=e.target;if(el.dataset?.a==='nt'
 addEventListener('hashchange',route);route();
 </script>
 
+<script>
+/* AI upgrade + dashboard polish (additive) */
+(function(){
+const css=document.createElement('style');css.textContent=`
+.hero2{display:grid;gap:14px;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);margin-bottom:14px}
+@media(max-width:900px){.hero2{grid-template-columns:1fr}}
+.brief{background:radial-gradient(500px 220px at 100% 0,rgba(20,184,166,.28),transparent 70%),linear-gradient(135deg,var(--navy),var(--navy2));color:#e6f6f4;border-radius:14px;padding:20px;border:1px solid #1d4f5a;box-shadow:var(--shadow)}
+.brief h2{font:600 18px var(--head);margin:6px 0 4px;color:#fff}
+.brief .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6fe3d4;display:flex;align-items:center;gap:6px}
+.brief .tag i{width:7px;height:7px;border-radius:50%;background:#2dd4c1;box-shadow:0 0 0 4px rgba(45,212,193,.2)}
+.brief .out{white-space:pre-wrap;font-size:14px;line-height:1.6;margin:12px 0;min-height:64px;color:#d9eef0}
+.brief .out.empty{color:#8fb0c0}
+.brief .ask{display:flex;gap:8px;flex-wrap:wrap}
+.brief input{flex:1 1 200px;padding:9px 12px;border-radius:8px;border:1px solid #2a5a75;background:#0b1f33;color:#e6f6f4}
+.brief .btn{background:#14b8a6;border-color:#14b8a6;color:#05241f;font-weight:600}
+.brief .btn.q{background:transparent;color:#b8d0da;border-color:#2a5a75;font-weight:500}
+.brief .fine{font-size:11px;color:#8fb0c0;margin:10px 0 0}
+.focus{border-radius:14px}
+.focus .big{font:700 38px var(--head);color:var(--teal-d);font-variant-numeric:tabular-nums}
+.stat{border-top:3px solid var(--teal);transition:transform .2s,box-shadow .2s}
+.stat:hover{transform:translateY(-3px)}
+.g5 .stat:nth-child(2){border-top-color:#5b8def}.g5 .stat:nth-child(3){border-top-color:#e0961e}.g5 .stat:nth-child(4){border-top-color:#8b5cf6}.g5 .stat:nth-child(5){border-top-color:#16794c}
+.free{margin-top:12px;padding-top:10px;border-top:1px solid #2a5a75}
+.free .ans{white-space:pre-wrap;margin-top:4px}
+`;document.head.append(css);
+
+const money=n=>'AED '+(n/1e6).toFixed(2)+'M';
+function ctx(){
+ const mine=clients.filter(c=>c.broker==='Sara Nasser');
+ return 'Today: Thursday 19 November 2026. Broker: Sara Nasser.\nCLIENTS:\n'+mine.map(c=>`- ${c.name} (${c.type}), budget ${money(c.budget[0])}-${money(c.budget[1])}, wants ${c.beds}-bed ${c.ptype} in ${c.locs.join('/')}. Notes: ${c.notes} Latest: ${c.tl[0]?c.tl[0].d+' '+c.tl[0].k+': '+c.tl[0].x:'no interactions'}`).join('\n')
+ +'\nOPEN FOLLOW-UPS:\n'+fus.filter(f=>!f.done).map(f=>`- ${cl(f.cid).name}: ${f.type} "${f.next}" due ${f.d} (${f.pri})`).join('\n')
+ +'\nDEALS:\n'+deals.filter(d=>!d.stage.startsWith('Closed')).map(d=>`- ${cl(d.cid).name}: ${d.prop}, ${money(d.val)}, stage ${d.stage}, next ${d.next||'none'}`).join('\n')
+ +'\nBEST MATCHES:\n'+mine.map(c=>{const m=matches(c)[0];return m?`- ${c.name}: ${m.p.title} ${m.r.pts}% (open: ${m.r.ver.join('; ')||'none'})`:''}).filter(Boolean).join('\n');
+}
+const RULES='You are the AI assistant inside a real-estate broker workspace. Use ONLY the data given; never invent facts, prices or dates. Mention anything unverified. Be concise and practical. Plain text only, no markdown symbols. Suggestions only: the broker decides and nothing is sent automatically.';
+let SM=undefined,busy=false;
+async function sampler(){if(SM===undefined){try{SM=await claude.use('sample')}catch(e){SM=null}}return SM}
+async function run(prompt,into,fallback,keep){
+ const s=await sampler();
+ if(!s){into(fallback,true);return fallback}
+ try{const r=await s([{role:'user',content:RULES+'\n\n'+ctx()+'\n\n'+prompt}],{cache:false,modelTier:'quick',onText:({text})=>into(text,false)});into(r.text,true);return r.text}
+ catch(e){if(e&&e.code==='not_granted'){toast('AI permission was declined. Showing a sample answer.')}into(fallback,true);return fallback}
+}
+const fbBrief=()=>{const t=fus.filter(f=>f.d<=TODAY&&!f.done);return 'Sample brief (AI unavailable):\n'+t.map(f=>`• ${cl(f.cid).name}: ${f.type} - ${f.next}`).join('\n')};
+S.brief=S.brief||'';S.free=S.free||[];
+
+const mv=views.myday;
+views.myday=()=>{
+ let h=mv();
+ const due=fus.filter(f=>f.d<=TODAY&&!f.done).length;
+ const hero=`<div class="hero2"><div class="brief"><div class="tag"><i></i>AI daily brief</div><h2>What should I focus on today?</h2>
+ <div class="out ${S.brief?'':'empty'}" id="briefOut">${S.brief?esc(S.brief):'Generate a short brief built from your follow-ups, deals and client notes.'}</div>
+ <div class="ask"><button class="btn" data-a="aiBrief">${S.brief?'Refresh brief':'Generate my brief'}</button><input id="dq" placeholder="Ask AI about your day, clients or deals" aria-label="Ask AI"><button class="btn q" data-a="aiDash">Ask</button></div>
+ <p class="fine">Suggestions only, based on sample data. Nothing is sent or changed without you.</p></div>
+ <div class="card focus"><h2>Today at a glance</h2><div class="big" data-n="${due}">0</div><div class="mute">follow-ups due or overdue</div><div class="item"><div><b>Biggest open deal</b><div class="mute">${(()=>{const d=deals.filter(d=>!d.stage.startsWith('Closed')).sort((a,b)=>b.val-a.val)[0];return d?esc(d.prop)+' · '+money(d.val):'None'})()}</div></div></div><a class="btn s" href="#ai" style="display:inline-block;margin-top:6px;text-decoration:none">Open AI Assistant</a></div></div>`;
+ const i=h.indexOf('<div class="grid g5">');
+ return h.slice(0,i)+hero+h.slice(i);
+};
+const av=views.ai;
+views.ai=()=>{
+ const c=cl(S.cid);
+ const box=`<div class="card" style="margin-bottom:14px"><h2>Ask AI anything about ${esc(c.name)}</h2><div class="row"><input class="search" style="flex:1 1 260px" id="aq" placeholder="e.g. What should I say about service charges?" aria-label="Ask AI"><button class="btn p" data-a="aiClient">Ask AI</button></div><div id="aifree">${S.free.filter(x=>x.cid===c.id).map(x=>`<div class="free"><div class="mute">You: ${esc(x.q)}</div><div class="ans" contenteditable="true">${esc(x.a)}</div></div>`).join('')}</div></div>`;
+ const h=av(),i=h.indexOf('<div class="grid g2">');
+ return h.slice(0,i)+box+h.slice(i);
+};
+const set=(id,txt,done,cls)=>{const e=document.getElementById(id);if(e){e.textContent=txt;if(cls)e.classList.remove('empty')}};
+A.aiBrief=async()=>{if(busy)return;busy=true;const b=document.querySelector('[data-a=aiBrief]');if(b)b.textContent='Thinking…';
+ const a=await run('Write my daily brief: the top 3 things to do today in priority order, each one line with the reason, then one risk to watch. Under 120 words.',(t)=>set('briefOut',t,0,1),fbBrief());
+ S.brief=a;busy=false;if(S.route==='myday')rerender()};
+A.aiDash=async()=>{const q=($('#dq')||{}).value;if(!q||busy)return;busy=true;
+ const a=await run('The broker asks: '+q+'\nAnswer in under 100 words.',(t)=>set('briefOut',t,0,1),'AI is unavailable here, so I cannot answer that right now.');
+ S.brief=a;busy=false};
+A.aiClient=async()=>{const q=($('#aq')||{}).value,c=cl(S.cid);if(!q||busy)return;busy=true;
+ const e={cid:c.id,q,a:'Thinking…'};S.free.push(e);const box=$('#aifree');if(box)box.insertAdjacentHTML('beforeend',`<div class="free"><div class="mute">You: ${esc(q)}</div><div class="ans" id="fa${S.free.length}">Thinking…</div></div>`);
+ const id='fa'+S.free.length;
+ e.a=await run('Client in focus: '+c.name+'. The broker asks: '+q+'\nAnswer in under 120 words, using this client\'s record.',(t)=>set(id,t),'AI is unavailable here. Try the quick actions above for sample answers.');
+ busy=false;rerender()};
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='dq')A.aiDash();if(e.key==='Enter'&&e.target.id==='aq')A.aiClient()});
+route();
+})();
+</script>
+<script>
+/* Visuals: property art, avatars, skyline (inline SVG, no external images) */
+(function(){
+let U=0;const hs=s=>{let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))>>>0;return h};
+function art(key,w,h,kind){const s=hs(key),hue=[190,210,25,265,160][s%5],id='a'+(U++),r=n=>((s>>(n%20))&255)/255;
+ let b='',x=0,i=0;const n=kind==='sky'?16:6;const bw=w/n;
+ for(;i<n;i++){const bh=h*(.28+.55*r(i*3+1)),bx=i*bw+ (kind==='sky'?0:bw*.15),ww=bw*(kind==='sky'?.82:.72);
+  b+=`<rect x="${bx.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${ww.toFixed(1)}" height="${bh.toFixed(1)}" fill="hsl(${hue} 35% ${14+Math.round(r(i)*14)}%)"/><rect x="${bx.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${ww.toFixed(1)}" height="${bh.toFixed(1)}" fill="url(#${id}w)"/>`}
+ return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${hue} 70% 22%)"/><stop offset=".65" stop-color="hsl(${hue+25} 75% 55%)"/><stop offset="1" stop-color="hsl(${hue+40} 85% 72%)"/></linearGradient><pattern id="${id}w" width="7" height="9" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="3" height="4" fill="#ffe9a8" opacity=".75"/></pattern></defs><rect width="${w}" height="${h}" fill="url(#${id}g)"/><circle cx="${w*.8}" cy="${h*.28}" r="${h*.11}" fill="#fff" opacity=".55"/>${b}<rect y="${h-5}" width="${w}" height="5" fill="hsl(${hue} 40% 10%)"/></svg>`}
+const av=(name,sz=34)=>{const hue=hs(name)%360,ini=name.split(' ').map(x=>x[0]).slice(0,2).join('');return `<span class="av2" style="width:${sz}px;height:${sz}px;background:linear-gradient(135deg,hsl(${hue} 65% 45%),hsl(${hue+40} 70% 35%));font-size:${sz*.38}px">${ini}</span>`};
+const css=document.createElement('style');css.textContent=`
+.av2{display:inline-grid;place-items:center;border-radius:50%;color:#fff;font-weight:700;font-family:var(--head);flex:none}
+.th{width:54px;height:54px;border-radius:10px;overflow:hidden;flex:none}
+.gal{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));margin:14px 0}
+.pc{border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .2s}
+.pc:hover{transform:translateY(-4px)}
+.pc .im{height:130px;position:relative}
+.pc .im .pill{position:absolute;left:10px;top:10px;background:rgba(11,31,51,.7);color:#6fe3d4}
+.pc .bd{padding:12px}.pc b{display:block;font:600 14px var(--head)}
+.pc .pr{font:700 16px var(--head);color:var(--teal-d);margin-top:4px}
+.brief{position:relative;overflow:hidden}.brief>*:not(.sk){position:relative;z-index:1}
+.sk{position:absolute;right:0;bottom:0;width:62%;height:55%;opacity:.4;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 50%);mask-image:linear-gradient(90deg,transparent,#000 50%)}
+.focus{overflow:hidden;padding:0}.focus .fi{height:90px}.focus .fb{padding:14px 16px}
+.item>.th+div,.item>.av2+div{flex:1;min-width:140px}
+`;document.head.append(css);
+const m2=views.myday;
+views.myday=()=>{let h=m2();
+ h=h.replace('<div class="card focus"><h2>','<div class="card focus"><div class="fi">'+art('skyline',400,90,'sky')+'</div><div class="fb"><h2>').replace('Open AI Assistant</a></div></div>','Open AI Assistant</a></div></div></div>').replace('<div class="tag"><i></i>AI daily brief</div>','<div class="sk">'+art('hero',600,200,'sky')+'</div><div class="tag"><i></i>AI daily brief</div>');
+ const g=props.filter(p=>p.status==='Available').slice(0,4).map(p=>`<a class="pc" href="#properties"><div class="im">${art(p.id+p.title,320,130)}<span class="pill">${esc(p.type)}</span></div><div class="bd"><b>${esc(p.title)}</b><div class="mute">${esc(p.loc)}</div><div class="pr">${aed(p.price)}</div></div></a>`).join('');
+ const i=h.indexOf('<div class="grid g2">');
+ return h.slice(0,i)+`<div class="row sp" style="margin-top:6px"><h2 style="font:600 16px var(--head);margin:0">Featured properties</h2><a class="mute" href="#properties">View all</a></div><div class="gal">${g}</div>`+h.slice(i)};
+const b0=bind;bind=function(){b0();if(S.route!=='myday')return;
+ document.querySelectorAll('#view .item').forEach(it=>{if(it.querySelector('.th,.av2'))return;const t=it.textContent;
+  const p=props.find(p=>t.includes(p.title));if(p){it.insertAdjacentHTML('afterbegin',`<span class="th">${art(p.id+p.title,54,54)}</span>`);return}
+  const c=clients.find(c=>t.includes(c.name));if(c)it.insertAdjacentHTML('afterbegin',av(c.name))})};
+route();
+})();
+</script>
+<script>
+/* Property photos: add your own image to any property */
+(function(){
+S.photos=S.photos||{};
+const css=document.createElement('style');css.textContent=`.pcard .thumb{position:relative;background-size:cover;background-position:center}.phb{position:absolute;right:8px;bottom:8px;background:rgba(11,31,51,.78);color:#e6f6f4;border-color:#2a5a75;backdrop-filter:blur(4px)}.phb:hover{background:#14b8a6;color:#05241f}`;document.head.append(css);
+const pc0=propCards;
+propCards=function(){return pc0().replace(/data-id="(p\d+)"([^>]*)><div class="thumb"([^>]*)>([^<]*)<\/div>/g,(m,id,r,st,loc)=>{const ph=S.photos[id];if(ph)st=st.replace(/"$/,';background-image:url('+ph+');background-size:cover;background-position:center"');return `data-id="${id}"${r}><div class="thumb"${st}>${ph?'':loc}<button class="btn s phb" type="button" data-a="pph" data-id="${id}">${ph?'Change photo':'+ Add photo'}</button></div>`})};
+A.pph=el=>{const id=el.dataset.id,inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+ inp.onchange=()=>{const f=inp.files[0];if(!f)return;const img=new Image(),u=URL.createObjectURL(f);
+  img.onload=()=>{const k=Math.min(1,900/img.width),c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;c.getContext('2d').drawImage(img,0,0,c.width,c.height);S.photos[id]=c.toDataURL('image/jpeg',.85);URL.revokeObjectURL(u);toast('Photo added');rerender()};
+  img.onerror=()=>toast('Could not read that image');img.src=u};inp.click()};
+const b1=bind;bind=function(){b1();if(S.route!=='myday')return;
+ document.querySelectorAll('#view .pc').forEach(c=>{const p=props.find(p=>c.textContent.includes(p.title)),ph=p&&S.photos[p.id];if(!ph)return;const im=c.querySelector('.im');im.style.cssText+=`;background:url(${ph}) center/cover`;const s=im.querySelector('svg');if(s)s.remove()});
+ document.querySelectorAll('#view .th').forEach(t=>{const it=t.parentElement,p=props.find(p=>it.textContent.includes(p.title)),ph=p&&S.photos[p.id];if(ph){t.style.background=`url(${ph}) center/cover`;const s=t.querySelector('svg');if(s)s.remove()}})};
+route();
+})();
+</script>
 </body></html>
